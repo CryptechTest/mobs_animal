@@ -93,10 +93,17 @@ mobs:alias_mob("mobs:rat", "mobs_animal:rat") -- compatibility
 
 -- cooked rat, yummy!
 minetest.register_craftitem(":mobs:rat_cooked", {
-	description = S("Cooked Rat"),
+	description = S("Cooked Rat") .. '\n' ..
+    minetest.colorize('#DEB887', S('Hunger') .. ': 3'),
 	inventory_image = "mobs_cooked_rat.png",
-	on_use = minetest.item_eat(3),
-	groups = {food_rat = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then 
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)
+	end,
+	groups = {food_rat = 1, flammable = 2, hunger_amount = 3}
 })
 
 minetest.register_craft({

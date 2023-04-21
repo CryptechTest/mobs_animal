@@ -249,10 +249,17 @@ minetest.register_node(":mobs:egg", {
 
 -- fried egg
 minetest.register_craftitem(":mobs:chicken_egg_fried", {
-	description = S("Fried Egg"),
+	description = S("Fried Egg") .. '\n' ..
+    minetest.colorize('#DEB887', S('Hunger') .. ': 2'),
 	inventory_image = "mobs_chicken_egg_fried.png",
-	on_use = minetest.item_eat(2),
-	groups = {food_egg_fried = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then 
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)
+	end,
+	groups = {food_egg_fried = 1, flammable = 2, hunger_amount = 2}
 })
 
 minetest.register_craft({
@@ -263,18 +270,32 @@ minetest.register_craft({
 
 -- raw chicken
 minetest.register_craftitem(":mobs:chicken_raw", {
-	description = S("Raw Chicken"),
+	description = S("Raw Chicken") .. '\n' ..
+    minetest.colorize('#DEB887', S('Hunger') .. ': 2'),
 	inventory_image = "mobs_chicken_raw.png",
-	on_use = minetest.item_eat(2),
-	groups = {food_meat_raw = 1, food_chicken_raw = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then 
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)
+	end,
+	groups = {food_meat_raw = 1, food_chicken_raw = 1, flammable = 2, hunger_amount = 2}
 })
 
 -- cooked chicken
 minetest.register_craftitem(":mobs:chicken_cooked", {
-	description = S("Cooked Chicken"),
+	description = S("Cooked Chicken") .. '\n' ..
+    minetest.colorize('#DEB887', S('Hunger') .. ': 6'),
 	inventory_image = "mobs_chicken_cooked.png",
-	on_use = minetest.item_eat(6),
-	groups = {food_meat = 1, food_chicken = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then 
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)
+	end,
+	groups = {food_meat = 1, food_chicken = 1, flammable = 2, hunger_amount = 6}
 })
 
 minetest.register_craft({

@@ -145,18 +145,32 @@ mobs:alias_mob("mobs:bunny", "mobs_animal:bunny") -- compatibility
 
 -- raw rabbit
 minetest.register_craftitem(":mobs:rabbit_raw", {
-	description = S("Raw Rabbit"),
+	description = S("Raw Rabbit") .. '\n' ..
+    minetest.colorize('#DEB887', S('Hunger') .. ': 5'),
 	inventory_image = "mobs_rabbit_raw.png",
-	on_use = minetest.item_eat(3),
-	groups = {food_meat_raw = 1, food_rabbit_raw = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then 
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)
+	end,
+	groups = {food_meat_raw = 1, food_rabbit_raw = 1, flammable = 2, hunger_amount = 3}
 })
 
 -- cooked rabbit
 minetest.register_craftitem(":mobs:rabbit_cooked", {
-	description = S("Cooked Rabbit"),
+	description = S("Cooked Rabbit") .. '\n' ..
+    minetest.colorize('#DEB887', S('Hunger') .. ': 5'),
 	inventory_image = "mobs_rabbit_cooked.png",
-	on_use = minetest.item_eat(5),
-	groups = {food_meat = 1, food_rabbit = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then 
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)
+	end,
+	groups = {food_meat = 1, food_rabbit = 1, flammable = 2, hunger_amount = 5}
 })
 
 minetest.register_craft({

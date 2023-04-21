@@ -291,18 +291,32 @@ mobs:alias_mob("mobs:sheep", "mobs_animal:sheep_white") -- compatibility
 
 -- raw mutton
 minetest.register_craftitem(":mobs:mutton_raw", {
-	description = S("Raw Mutton"),
+	description = S("Raw Mutton") .. '\n' ..
+    minetest.colorize('#DEB887', S('Hunger') .. ': 2'),
 	inventory_image = "mobs_mutton_raw.png",
-	on_use = minetest.item_eat(2),
-	groups = {food_meat_raw = 1, food_mutton_raw = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then 
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)
+	end,
+	groups = {food_meat_raw = 1, food_mutton_raw = 1, flammable = 2, hunger_amount = 2}
 })
 
 -- cooked mutton
 minetest.register_craftitem(":mobs:mutton_cooked", {
-	description = S("Cooked Mutton"),
+	description = S("Cooked Mutton") .. '\n' ..
+    minetest.colorize('#DEB887', S('Hunger') .. ': 6'),
 	inventory_image = "mobs_mutton_cooked.png",
-	on_use = minetest.item_eat(6),
-	groups = {food_meat = 1, food_mutton = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then 
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)
+	end,
+	groups = {food_meat = 1, food_mutton = 1, flammable = 2, hunger_amount = 6}
 })
 
 minetest.register_craft({
