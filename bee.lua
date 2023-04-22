@@ -78,7 +78,7 @@ minetest.register_craftitem(":mobs:honey", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+		return minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
 	groups = { food_honey = 1, food_sugar = 1, flammable = 1, hunger_amount = 4 }
 })

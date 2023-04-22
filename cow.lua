@@ -225,7 +225,7 @@ minetest.register_craftitem(":mobs:butter", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+		return minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
 	groups = { food_butter = 1, flammable = 2, hunger_amount = 1 }
 })
@@ -252,7 +252,7 @@ minetest.register_craftitem(":mobs:cheese", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+		return minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
 	groups = { food_cheese = 1, flammable = 2, hunger_amount = 4 }
 })

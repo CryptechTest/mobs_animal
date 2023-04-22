@@ -146,7 +146,7 @@ minetest.register_craftitem(":mobs:rabbit_raw", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+		return minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
 	groups = { food_meat_raw = 1, food_rabbit_raw = 1, flammable = 2, hunger_amount = 3 }
 })
@@ -161,7 +161,7 @@ minetest.register_craftitem(":mobs:rabbit_cooked", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+		return minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
 	groups = { food_meat = 1, food_rabbit = 1, flammable = 2, hunger_amount = 5 }
 })

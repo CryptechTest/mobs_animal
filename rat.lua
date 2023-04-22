@@ -98,7 +98,7 @@ minetest.register_craftitem(":mobs:rat_cooked", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+		return minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
 	groups = { food_rat = 1, flammable = 2, hunger_amount = 3 }
 })

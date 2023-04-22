@@ -247,7 +247,7 @@ minetest.register_craftitem(":mobs:chicken_egg_fried", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+		return minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
 	groups = { food_egg_fried = 1, flammable = 2, hunger_amount = 2 }
 })
@@ -268,7 +268,7 @@ minetest.register_craftitem(":mobs:chicken_raw", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+		return minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
 	groups = { food_meat_raw = 1, food_chicken_raw = 1, flammable = 2, hunger_amount = 2 }
 })
@@ -283,7 +283,7 @@ minetest.register_craftitem(":mobs:chicken_cooked", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+		return minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
 	groups = { food_meat = 1, food_chicken = 1, flammable = 2, hunger_amount = 6 }
 })
