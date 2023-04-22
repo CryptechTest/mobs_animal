@@ -1,22 +1,21 @@
-
 local S = mobs.intllib_animal
 
 
 -- Rat by KPavel and PilzAdam (B3D model by sirrobzeroone)
 
 mobs:register_mob("mobs_animal:rat", {
-stepheight = 0.6,
+	stepheight = 0.6,
 	type = "animal",
 	passive = true,
 	hp_min = 1,
 	hp_max = 4,
 	armor = 200,
-	collisionbox = {-0.2, -1, -0.2, 0.2, -0.8, 0.2},
+	collisionbox = { -0.2, -1, -0.2, 0.2, -0.8, 0.2 },
 	visual = "mesh",
 	mesh = "mobs_rat.b3d",
 	textures = {
-		{"mobs_rat.png"},
-		{"mobs_rat2.png"}
+		{ "mobs_rat.png" },
+		{ "mobs_rat2.png" }
 	},
 	makes_footstep_sound = false,
 	sounds = {
@@ -30,11 +29,10 @@ stepheight = 0.6,
 	lava_damage = 4,
 	light_damage = 0,
 	fear_height = 2,
-
 	on_rightclick = function(self, clicker)
 		mobs:capture_mob(self, clicker, 50, 90, 0, true, "mobs_animal:rat")
 	end,
---[[
+	--[[
 	do_custom = function(self, dtime)
 
 		self.rat_timer = (self.rat_timer or 0) + dtime
@@ -50,7 +48,7 @@ stepheight = 0.6,
 		return false -- return but skip doing rest of API
 	end,
 ]]
---[[
+	--[[
 	on_blast = function(obj, damage)
 		print ("--- damage is", damage)
 		print ("---    mob is", obj.object:get_luaentity().name)
@@ -64,23 +62,22 @@ stepheight = 0.6,
 -- example on_spawn function
 local function rat_spawn(self, pos)
 	self = self:get_luaentity()
-	print (self.name, pos.x, pos.y, pos.z)
+	print(self.name, pos.x, pos.y, pos.z)
 	self.hp_max = 100
 	self.health = 100
 end
 
 
 if not mobs.custom_spawn_animal then
-
 	mobs:spawn({
 		name = "mobs_animal:rat",
-		nodes = {"default:stone"},
+		nodes = { "default:stone" },
 		min_light = 3,
 		max_light = 9,
 		interval = 60,
 		chance = 8000,
 		max_height = 0,
-	--	on_spawn = rat_spawn,
+		--	on_spawn = rat_spawn,
 	})
 end
 
@@ -94,16 +91,16 @@ mobs:alias_mob("mobs:rat", "mobs_animal:rat") -- compatibility
 -- cooked rat, yummy!
 minetest.register_craftitem(":mobs:rat_cooked", {
 	description = S("Cooked Rat") .. '\n' ..
-    minetest.colorize('#DEB887', S('Hunger') .. ': 3'),
+		minetest.colorize('#DEB887', S('Hunger') .. ': 3'),
 	inventory_image = "mobs_cooked_rat.png",
 	on_use = function(itemstack, user, pointed_thing)
 		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
-		if hunger_amount == 0 then 
+		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount)
+		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
 	end,
-	groups = {food_rat = 1, flammable = 2, hunger_amount = 3}
+	groups = { food_rat = 1, flammable = 2, hunger_amount = 3 }
 })
 
 minetest.register_craft({
