@@ -1,4 +1,3 @@
-
 local S = mobs.intllib_animal
 
 
@@ -17,11 +16,11 @@ mobs:register_mob("mobs_animal:pumba", {
 	hp_min = 5,
 	hp_max = 15,
 	armor = 200,
-	collisionbox = {-0.4, -0.01, -0.4, 0.4, 0.95, 0.4},
+	collisionbox = { -0.4, -0.01, -0.4, 0.4, 0.95, 0.4 },
 	visual = "mesh",
 	mesh = "mobs_pumba.b3d",
 	textures = {
-		{"mobs_pumba.png"}
+		{ "mobs_pumba.png" }
 	},
 	makes_footstep_sound = true,
 	sounds = {
@@ -33,10 +32,10 @@ mobs:register_mob("mobs_animal:pumba", {
 	jump = true,
 	jump_height = 6,
 	pushable = true,
-	follow = {"default:apple", "farming:potato"},
+	follow = { "default:apple", "farming:potato" },
 	view_range = 10,
 	drops = {
-		{name = "mobs:pork_raw", chance = 1, min = 1, max = 3}
+		{ name = "mobs:pork_raw", chance = 1, min = 1, max = 3 }
 	},
 	water_damage = 0.01,
 	lava_damage = 5,
@@ -50,16 +49,13 @@ mobs:register_mob("mobs_animal:pumba", {
 		walk_end = 100,
 		punch_start = 70,
 		punch_end = 100,
-
 		die_start = 1, -- we dont have a specific death animation so we will
 		die_end = 2, --   re-use 2 standing frames at a speed of 1 fps and
 		die_speed = 1, -- have mob rotate when dying.
 		die_loop = false,
 		die_rotate = true
 	},
-
 	on_rightclick = function(self, clicker)
-
 		if mobs:feed_tame(self, clicker, 8, true, true) then return end
 		if mobs:protect(self, clicker) then return end
 		if mobs:capture_mob(self, clicker, 0, 5, 50, false, nil) then return end
@@ -67,21 +63,20 @@ mobs:register_mob("mobs_animal:pumba", {
 })
 
 
-local spawn_on = {"default:dirt_with_grass"}
-local spawn_by = {"group:grass"}
+local spawn_on = { "default:dirt_with_grass" }
+local spawn_by = { "group:grass" }
 
 if minetest.get_mapgen_setting("mg_name") ~= "v6" then
-	spawn_on = {"default:dirt_with_dry_grass", "default:dry_dirt_with_dry_grass"}
-	spawn_by = {"group:dry_grass"}
+	spawn_on = { "default:dirt_with_dry_grass", "default:dry_dirt_with_dry_grass" }
+	spawn_by = { "group:dry_grass" }
 end
 
 if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:mushroom_dirt"}
-	spawn_by = {"flowers:mushroom_brown", "flowers:mushroom_red"}
+	spawn_on = { "ethereal:mushroom_dirt" }
+	spawn_by = { "flowers:mushroom_brown", "flowers:mushroom_red" }
 end
 
 if not mobs.custom_spawn_animal then
-
 	mobs:spawn({
 		name = "mobs_animal:pumba",
 		nodes = spawn_on,
@@ -105,18 +100,32 @@ mobs:alias_mob("mobs:pumba", "mobs_animal:pumba") -- compatibility
 
 -- raw porkchop
 minetest.register_craftitem(":mobs:pork_raw", {
-	description = S("Raw Porkchop"),
+	description = S("Raw Porkchop") .. '\n' ..
+		minetest.colorize('#DEB887', S('Hunger') .. ': 4'),
 	inventory_image = "mobs_pork_raw.png",
-	on_use = minetest.item_eat(4),
-	groups = {food_meat_raw = 1, food_pork_raw = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+	end,
+	groups = { food_meat_raw = 1, food_pork_raw = 1, flammable = 2, hunger_amount = 4 }
 })
 
 -- cooked porkchop
 minetest.register_craftitem(":mobs:pork_cooked", {
-	description = S("Cooked Porkchop"),
+	description = S("Cooked Porkchop") .. '\n' ..
+		minetest.colorize('#DEB887', S('Hunger') .. ': 8'),
 	inventory_image = "mobs_pork_cooked.png",
-	on_use = minetest.item_eat(8),
-	groups = {food_meat = 1, food_pork = 1, flammable = 2}
+	on_use = function(itemstack, user, pointed_thing)
+		local hunger_amount = minetest.get_item_group(itemstack:get_name(), "hunger_amount") or 0
+		if hunger_amount == 0 then
+			return itemstack
+		end
+		minetest.item_eat(hunger_amount)(itemstack, user, pointed_thing)
+	end,
+	groups = { food_meat = 1, food_pork = 1, flammable = 2, hunger_amount = 8 }
 })
 
 minetest.register_craft({
