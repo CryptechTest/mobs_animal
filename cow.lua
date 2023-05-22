@@ -172,7 +172,7 @@ minetest.register_craftitem(":mobs:bucket_milk", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount, "bucket:bucket_empty")
+		return minetest.item_eat(hunger_amount, "bucket:bucket_empty")(itemstack, user, pointed_thing)
 	end,
 	groups = { food_milk = 1, flammable = 3, drink = 1, hunger_amount = 8 }
 })
@@ -187,7 +187,7 @@ minetest.register_craftitem(":mobs:glass_milk", {
 		if hunger_amount == 0 then
 			return itemstack
 		end
-		minetest.item_eat(hunger_amount, "vessels:drinking_glass")
+		return minetest.item_eat(hunger_amount, "vessels:drinking_glass")(itemstack, user, pointed_thing)
 	end,
 	groups = { food_milk_glass = 1, flammable = 3, vessel = 1, drink = 1, hunger_amount = 2 }
 })
