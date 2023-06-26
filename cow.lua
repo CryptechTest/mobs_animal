@@ -205,12 +205,12 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "mobs:bucket_milk",
 	recipe = {
-		{ "group:food_milk_glass", "group:food_milk_glass" },
-		{ "group:food_milk_glass", "group:food_milk_glass" },
+		{ "mobs:glass_milk", "mobs:glass_milk" },
+		{ "mobs:glass_milk", "mobs:glass_milk" },
 		{ "bucket:bucket_empty",   "" }
 	},
 	replacements = {
-		{ "group:food_milk_glass", "vessels:drinking_glass 4" }
+		{ "mobs:glass_milk", "vessels:drinking_glass 4" }
 	}
 })
 
