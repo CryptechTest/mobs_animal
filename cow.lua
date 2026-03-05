@@ -8,6 +8,7 @@ mobs:register_mob("mobs_animal:cow", {
 	passive = false,
 	attack_type = "dogfight",
 	attack_npcs = false,
+	attack_players = false,
 	reach = 2,
 	damage = 4,
 	hp_min = 5,

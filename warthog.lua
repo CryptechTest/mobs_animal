@@ -11,6 +11,7 @@ mobs:register_mob("mobs_animal:pumba", {
 	group_attack = true,
 	owner_loyal = true,
 	attack_npcs = false,
+	attack_players = false,
 	reach = 2,
 	damage = 2,
 	hp_min = 5,
